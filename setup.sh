@@ -8,7 +8,7 @@ sudo unlink /usr/bin/python3
 sudo ln -s /usr/bin/python3.5 /usr/bin/python3
 sudo python3 -m pip install --upgrade pip
 
-virtualenv -p python3 .venv
+virtualenv -p python3 web/.venv
 . .venv/bin/activate
 
 pip install --upgrade gunicorn
