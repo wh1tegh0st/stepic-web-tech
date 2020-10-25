@@ -12,5 +12,6 @@ virtualenv -p python3 web/.venv
 . .venv/bin/activate
 
 pip install --upgrade gunicorn
+pip install --upgrade django==2.1
 
 deactivate

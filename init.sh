@@ -7,4 +7,6 @@ sudo /etc/init.d/nginx restart
 # Newer than the system gunicorn
 cd web || exit 1
 source .venv/bin/activate
-gunicorn -c etc/gunicorn.config.py hello:app &
+gunicorn -c etc/gunicorn.hello.config.py hello:app &
+cd ask || exit 1
+gunicorn -c ../etc/gunicorn.ask.config.py ask.wsgi &
