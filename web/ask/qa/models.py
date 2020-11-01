@@ -1,14 +1,14 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 
 
 # Create your models here.
 class QuestionManager(models.Manager):
-    def new(self):
-        return self.get_query_set().order_by('-added_at')
+    def recent(self):
+        return self.get_queryset().order_by('-added_at')
 
     def popular(self):
-        return self.get_query_set().order_by('-rating')
+        return self.get_queryset().order_by('-rating')
 
     def __str__(self):
         return self.text

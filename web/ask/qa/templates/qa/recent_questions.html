@@ -1,0 +1,29 @@
+{% extends "qa/base.html" %}
+
+{% block page_header %}
+<h2>Recent questions</h2>
+{% endblock page_header %}
+
+{% block content %}
+<ol>
+    {% for q in page.object_list %}
+    <li>
+        {{ q.title }} - <a href="{% url 'show_question' question_id=q.id %}">Details</a>
+    </li>
+    {% endfor %}
+</ol>
+
+<nav>
+    <ul class="pagination">
+        {% for p in paginator.page_range %}
+        {% if p == page.number %}
+        <li class="active">
+            {% else %}
+        <li>
+            {% endif %}
+            <a href="{% url 'list_recent_questions' %}?page={{ p }}">{{ p }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
+{% endblock content %}

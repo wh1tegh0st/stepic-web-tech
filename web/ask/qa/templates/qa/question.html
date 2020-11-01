@@ -1,0 +1,19 @@
+{% extends "qa/base.html" %}
+
+{% block page_header %}
+<h2>Question</h2>
+{% endblock page_header %}
+
+{% block content %}
+<h3>{{ question.title }}</h3>
+{{ question.text }}
+
+<h3>Answers:</h3>
+<ol>
+    {% for answer in answers %}
+    <li>
+        {{ answer }}
+    </li>
+    {% endfor %}
+</ol>
+{% endblock content %}
