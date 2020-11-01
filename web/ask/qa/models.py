@@ -5,7 +5,7 @@ from django.db import models
 # Create your models here.
 class QuestionManager(models.Manager):
     def recent(self):
-        return self.get_queryset().order_by('-added_at')
+        return self.get_queryset().order_by('-id')
 
     def popular(self):
         return self.get_queryset().order_by('-rating')
