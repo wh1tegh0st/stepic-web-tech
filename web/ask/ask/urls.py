@@ -23,7 +23,7 @@ urlpatterns = [
     path('login/', qa.views.test),
     path('signup/', qa.views.test),
     path('question/', include('qa.urls')),
-    path('ask/', qa.views.test),
+    path('ask/', qa.views.add_question, name='ask'),
     path('popular/', qa.views.list_popular_questions, name='list_popular_questions'),
     path('new/', qa.views.test),
     path('admin/', admin.site.urls),

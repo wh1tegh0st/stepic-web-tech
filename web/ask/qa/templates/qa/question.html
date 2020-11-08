@@ -16,4 +16,11 @@
     </li>
     {% endfor %}
 </ol>
+
+<h3>Add answer:</h3>
+<form method="POST" action="{% url 'show_question' question_id=question.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
 {% endblock content %}

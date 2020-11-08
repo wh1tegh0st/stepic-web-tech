@@ -1,8 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_GET
 
+from .forms import AnswerForm, AskForm
 from .models import Answer, Question
 
 
@@ -54,12 +56,35 @@ def list_popular_questions(request):
     })
 
 
-@require_GET
+@login_required
 def show_question(request, question_id):
     question = get_object_or_404(Question, id=question_id)
     answers = Answer.objects.filter(question=question)
+    if request.method == 'POST':
+        form = AnswerForm(request.user, question, request.POST)
+        if form.is_valid():
+            _ = form.save()
+            url = question.get_url()
+            return HttpResponseRedirect(url)
+    else:
+        form = AnswerForm(request.user, question)
 
     return render(request, 'qa/question.html', context={
         'question': question,
-        'answers': answers
+        'answers': answers,
+        'form': form
     })
+
+
+@login_required
+def add_question(request):
+    if request.method == 'POST':
+        form = AskForm(request.user, request.POST)
+        if form.is_valid():
+            question = form.save()
+            url = question.get_url()
+            return HttpResponseRedirect(url)
+    else:
+        form = AskForm(request.user)
+    return render(request, 'qa/add_question.html',
+                  {'form': form})

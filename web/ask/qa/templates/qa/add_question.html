@@ -1,0 +1,13 @@
+{% extends "qa/base.html" %}
+
+{% block page_header %}
+<h2>Add question</h2>
+{% endblock page_header %}
+
+{% block content %}
+<form method="POST" action="{% url 'ask' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save</button>
+</form>
+{% endblock content %}
