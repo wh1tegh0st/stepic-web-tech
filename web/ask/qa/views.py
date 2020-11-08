@@ -56,18 +56,17 @@ def list_popular_questions(request):
     })
 
 
-@login_required
 def show_question(request, question_id):
     question = get_object_or_404(Question, id=question_id)
     answers = Answer.objects.filter(question=question)
     if request.method == 'POST':
-        form = AnswerForm(request.user, question, request.POST)
+        form = AnswerForm(request.POST)
         if form.is_valid():
             _ = form.save()
             url = question.get_url()
             return HttpResponseRedirect(url)
     else:
-        form = AnswerForm(request.user, question)
+        form = AnswerForm()
 
     return render(request, 'qa/question.html', context={
         'question': question,
@@ -79,12 +78,12 @@ def show_question(request, question_id):
 @login_required
 def add_question(request):
     if request.method == 'POST':
-        form = AskForm(request.user, request.POST)
+        form = AskForm(request.POST)
         if form.is_valid():
             question = form.save()
             url = question.get_url()
             return HttpResponseRedirect(url)
     else:
-        form = AskForm(request.user)
+        form = AskForm()
     return render(request, 'qa/add_question.html',
                   {'form': form})
