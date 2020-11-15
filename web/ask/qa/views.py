@@ -1,5 +1,4 @@
 from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
@@ -57,7 +56,6 @@ def list_popular_questions(request):
     })
 
 
-@login_required
 def show_question(request, question_id):
     question = get_object_or_404(Question, id=question_id)
     answers = Answer.objects.filter(question=question)
@@ -77,7 +75,6 @@ def show_question(request, question_id):
     })
 
 
-@login_required
 def add_question(request):
     if request.method == 'POST':
         form = AskForm(request.user, request.POST)
