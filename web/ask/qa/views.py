@@ -1,10 +1,11 @@
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_GET
 
-from .forms import AnswerForm, AskForm
+from .forms import AnswerForm, AskForm, CustomAuthenticationForm, CustomUserCreationForm
 from .models import Answer, Question
 
 
@@ -87,4 +88,29 @@ def add_question(request):
     else:
         form = AskForm(request.user)
     return render(request, 'qa/add_question.html',
+                  {'form': form})
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('list_recent_questions')
+    else:
+        form = CustomUserCreationForm()
+    return render(request, 'qa/signup.html',
+                  {'form': form})
+
+
+def signin(request):
+    if request.method == 'POST':
+        form = CustomAuthenticationForm(request.POST)
+        if form.is_valid():
+            login(request, form.get_user())
+            return redirect('list_recent_questions')
+    else:
+        form = CustomAuthenticationForm()
+    return render(request, 'qa/signin.html',
                   {'form': form})

@@ -20,8 +20,8 @@ import qa.views
 
 urlpatterns = [
     path('', qa.views.list_recent_questions, name='list_recent_questions'),
-    path('login/', qa.views.test),
-    path('signup/', qa.views.test),
+    path('login/', qa.views.signin, name='signin'),
+    path('signup/', qa.views.signup, name='signup'),
     path('question/', include('qa.urls')),
     path('ask/', qa.views.add_question, name='ask'),
     path('popular/', qa.views.list_popular_questions, name='list_popular_questions'),
