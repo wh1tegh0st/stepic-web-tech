@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 
-from .models import Answer, Question
+from qa.models import Answer, Question
 
 
 class AskForm(forms.Form):
@@ -56,7 +56,7 @@ class CustomAuthenticationForm(forms.Form):
     password = forms.CharField(strip=False, widget=forms.PasswordInput)
 
     def __init__(self, *args, **kwargs):
-        self._authenticaled_user = None
+        self._authenticated_user = None
         super().__init__(*args, **kwargs)
 
     def clean(self):
@@ -64,8 +64,8 @@ class CustomAuthenticationForm(forms.Form):
         password = self.cleaned_data.get('password')
 
         if username and password:
-            self._authenticaled_user = authenticate(username=username, password=password)
-            if self._authenticaled_user is None:
+            self._authenticated_user = authenticate(username=username, password=password)
+            if self._authenticated_user is None:
                 raise forms.ValidationError(
                     "Incorrect login or password",
                     code='incorrect_credentials'
@@ -73,4 +73,4 @@ class CustomAuthenticationForm(forms.Form):
         return self.cleaned_data
 
     def get_user(self):
-        return self._authenticaled_user
+        return self._authenticated_user

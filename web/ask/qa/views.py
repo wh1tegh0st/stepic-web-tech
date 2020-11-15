@@ -1,11 +1,11 @@
 from django.contrib.auth import login
 from django.core.paginator import Paginator, EmptyPage
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_GET
 
-from .forms import AnswerForm, AskForm, CustomAuthenticationForm, CustomUserCreationForm
-from .models import Answer, Question
+from qa.forms import AnswerForm, AskForm, CustomAuthenticationForm, CustomUserCreationForm
+from qa.models import Answer, Question
 
 
 # Create your views here.
